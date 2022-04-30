@@ -1,0 +1,32 @@
+print "Enter a temperature (i.e. 35C, 100F): \n";
+$input = <STDIN>;
+
+chop($input);
+
+#if($input =~ m/(^[+-]?[0-9]+(\.[0-9]*)?)[   ]*([CF])$/) {   #space + tab
+#if($input =~ m/(^[+-]?[0-9]+(\.[0-9]*)?)[ \t]*([CF])$/) {   #$2 - любые вторые слева
+#if($input =~ m/(^[+-]?[0-9]+(?:\.[0-9]*)?)[ \t]*([CF])$/) {   #(?: - несохраняющие скобки
+#if($input =~ m/(^[+-]?[0-9]+(?:\.[0-9]*)?)\s*([CF])$/) {   #обобщенный пропуск
+if($input =~ m/(^[+-]?[0-9]+(?:\.[0-9]*)?)\s*([CF])$/i) {   #игнорирование регистра
+
+    print "$1\n";
+    print "$2\n";
+#    print "$3\n";
+    $InputNum = $1;
+    $InputType = $2;
+#    $InputType = $3;
+
+    if ($InputType =~ m/c/i){
+        $celsius = $InputNum;
+        $fahrenheit = ($celsius * 9 / 5) + 32;
+    } else {
+        $fahrenheit = $InputNum;
+        $celsius = ($fahrenheit - 32) * 5 / 9;
+    }
+
+
+    printf "%.2f C = %.2f F\n", $celsius, $fahrenheit;
+} else {
+    print "Expecting a number followed by \"C\" or \"F\", \n";
+    print "so I don't understand \"$input\".\n";
+}
